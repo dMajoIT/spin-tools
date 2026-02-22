@@ -133,6 +133,9 @@ public class SourceEditor {
     Font fontBoldItalic;
     Point charSize;
 
+    Color errorColor;
+    Color warningColor;
+
     int currentLine;
     Color currentLineBackground;
     boolean highlightCurrentLine;
@@ -1074,7 +1077,7 @@ public class SourceEditor {
                             try {
                                 Rectangle r = styledText.getTextBounds(entry.getStart(), entry.getStop());
                                 int[] polyline = computePolyline(new Point(r.x, r.y), new Point(r.x + r.width, r.y), styledText.getLineHeight());
-                                gc.setForeground(ColorRegistry.getColor(0xF6, 0xD4, 0x56));
+                                gc.setForeground(warningColor);
                                 gc.drawPolyline(polyline);
                             } catch (Exception ex) {
                                 // Ignore
@@ -1087,7 +1090,7 @@ public class SourceEditor {
                             try {
                                 Rectangle r = styledText.getTextBounds(entry.getStart(), entry.getStop());
                                 int[] polyline = computePolyline(new Point(r.x, r.y), new Point(r.x + r.width, r.y), styledText.getLineHeight());
-                                gc.setForeground(ColorRegistry.getColor(0xC0, 0x00, 0x00));
+                                gc.setForeground(errorColor);
                                 gc.drawPolyline(polyline);
                             } catch (Exception ex) {
                                 // Ignore
@@ -1303,6 +1306,9 @@ public class SourceEditor {
         rulersForeground = null;
 
         styleMap.clear();
+
+        errorColor = ColorRegistry.getColor(0xC0, 0x00, 0x00);
+        warningColor = ColorRegistry.getColor(0xF2, 0xBF, 0x57);
 
         if ("win32".equals(SWT.getPlatform()) && id == null) {
             if (Display.isSystemDarkTheme()) {
