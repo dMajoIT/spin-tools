@@ -952,7 +952,7 @@ public class SpinTools {
                         String text = FileUtils.loadFromFile(templateFile);
                         openNewTab(name, text);
                     } catch (Exception e1) {
-                        openInternalError(shell, "Error opening template file " + templateFile, e1);
+                        openInternalError(shell, e1);
                     }
                 }
                 else {
@@ -972,7 +972,7 @@ public class SpinTools {
                     String text = FileUtils.loadFromFile(templateFile);
                     openNewTab(name, text);
                 } catch (Exception e1) {
-                    openInternalError(shell, "Error opening template file " + templateFile, e1);
+                    openInternalError(shell, e1);
                 }
             }
             else {
@@ -996,7 +996,7 @@ public class SpinTools {
                         String text = FileUtils.loadFromFile(templateFile);
                         openNewTab(name, text);
                     } catch (Exception e1) {
-                        openInternalError(shell, "Error opening template file " + templateFile, e1);
+                        openInternalError(shell, e1);
                     }
                 }
                 else {
@@ -1016,7 +1016,7 @@ public class SpinTools {
                     String text = FileUtils.loadFromFile(templateFile);
                     openNewTab(name, text);
                 } catch (Exception e1) {
-                    openInternalError(shell, "Error opening template file " + templateFile, e1);
+                    openInternalError(shell, e1);
                 }
             }
             else {
@@ -1290,7 +1290,7 @@ public class SpinTools {
                         String text = FileUtils.loadFromFile(templateFile);
                         openNewTab(name, text);
                     } catch (Exception e1) {
-                        openInternalError(shell, "Error opening template file " + templateFile, e1);
+                        openInternalError(shell, e1);
                     }
                 }
                 else {
@@ -1313,7 +1313,7 @@ public class SpinTools {
                         String text = FileUtils.loadFromFile(templateFile);
                         openNewTab(name, text);
                     } catch (Exception e1) {
-                        openInternalError(shell, "Error opening template file " + templateFile, e1);
+                        openInternalError(shell, e1);
                     }
                 }
                 else {
@@ -2221,7 +2221,7 @@ public class SpinTools {
             editorTab.save();
             editorTab.clearDirty();
         } catch (Exception e) {
-            openInternalError(shell, "Unexpected error saving file", e);
+            openInternalError(shell, e);
         }
     }
 
@@ -2286,7 +2286,7 @@ public class SpinTools {
 
                 fileBrowser.refresh(fileToSave.getParentFile());
             } catch (Exception e) {
-                openInternalError(shell, "Unexpected error saving file", e);
+                openInternalError(shell, e);
             }
         }
     }
@@ -2307,7 +2307,7 @@ public class SpinTools {
             try {
                 doArchiveProject(editorTab);
             } catch (Exception e) {
-                openInternalError(shell, "Unexpected error archiving project", e);
+                openInternalError(shell, e);
             }
         }
     }
@@ -3737,11 +3737,11 @@ public class SpinTools {
     }
 
     public void runStartup(String[] args) {
-        int tabIndex = 0;
+        int tabIndex = -1;
         List<File> list = new ArrayList<>();
 
-        if (preferences.getReloadOpenTabs()) {
-            String[] openTabs = preferences.getOpenTabs();
+        String[] openTabs = preferences.getOpenTabs();
+        if (openTabs != null && preferences.getReloadOpenTabs()) {
             for (int i = 0; i < openTabs.length; i++) {
                 File file = new File(openTabs[i]);
                 if (!list.contains(file)) {
@@ -3760,10 +3760,14 @@ public class SpinTools {
             File file = new File(args[i]).getAbsoluteFile();
             if (FileUtils.isEditable(file) && !list.contains(file)) {
                 list.add(file);
+                if (tabIndex == -1) {
+                    tabIndex = list.indexOf(file);
+                }
             }
-            if (i == 0) {
-                tabIndex = list.indexOf(file);
-            }
+        }
+
+        if (tabIndex == -1 && !list.isEmpty()) {
+            tabIndex = 0;
         }
 
         for (File fileToOpen : list) {
@@ -4084,7 +4088,7 @@ public class SpinTools {
 
             @Override
             public void accept(Error e) {
-                openInternalError(display.getActiveShell(), "An unexpected error has occured.", e);
+                openInternalError(display.getActiveShell(), e);
             }
 
         });
@@ -4092,7 +4096,7 @@ public class SpinTools {
 
             @Override
             public void accept(RuntimeException e) {
-                openInternalError(display.getActiveShell(), "An unexpected error has occured.", e);
+                openInternalError(display.getActiveShell(), e);
             }
 
         });
@@ -4140,8 +4144,7 @@ public class SpinTools {
                     }
 
                 } catch (Exception e) {
-                    e.printStackTrace();
-                    return;
+                    openInternalError(display.getActiveShell(), e);
                 }
             }
         });
@@ -4151,7 +4154,7 @@ public class SpinTools {
 
     static boolean internalErrorRunning;
 
-    public static void openInternalError(Shell shell, String message, Throwable details) {
+    public static void openInternalError(Shell shell, Throwable details) {
         if (internalErrorRunning) {
             return;
         }
