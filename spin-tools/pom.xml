@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.maccasoft</groupId>
     <artifactId>spin-tools</artifactId>
-    <version>0.57.3</version>
+    <version>0.58.0</version>
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -73,12 +73,12 @@
         <dependency>
             <groupId>org.eclipse.platform</groupId>
             <artifactId>${swt.artifactId}</artifactId>
-            <version>3.134.0</version>
+            <version>3.135.0</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.platform</groupId>
             <artifactId>org.eclipse.jface</artifactId>
-            <version>3.39.100</version>
+            <version>3.40.0</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.platform</groupId>

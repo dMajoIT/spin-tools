@@ -31,31 +31,31 @@ static const char * jar_files[] = {
     "jackson-core-2.22.3.jar",
     "jackson-databind-2.22.3.jar",
     "jsvg-2.1.0.jar",
-    "org.eclipse.core.commands-3.12.500.jar",
+    "org.eclipse.core.commands-3.13.0.jar",
     "org.eclipse.core.databinding-1.13.700.jar",
     "org.eclipse.core.databinding.observable-1.13.500.jar",
     "org.eclipse.core.databinding.property-1.10.500.jar",
-    "org.eclipse.equinox.common-3.20.400.jar",
-    "org.eclipse.jface-3.39.100.jar",
+    "org.eclipse.equinox.common-3.21.0.jar",
+    "org.eclipse.jface-3.40.0.jar",
     "org.eclipse.jface.databinding-1.16.0.jar",
-    "org.eclipse.osgi-3.24.200.jar",
-    "org.eclipse.swt-3.134.0.jar",
+    "org.eclipse.osgi-3.24.300.jar",
+    "org.eclipse.swt-3.135.0.jar",
     "org.eclipse.swt.svg-3.133.0.jar",
 #if defined(__MINGW64__) || defined(__MINGW32__)
-    "org.eclipse.swt.win32.win32.x86_64-3.134.0.jar",
+    "org.eclipse.swt.win32.win32.x86_64-3.135.0.jar",
 #elif defined(__APPLE__)
   #if defined(__aarch64__) || defined(_M_ARM64)
-    "org.eclipse.swt.cocoa.macosx.aarch64-3.134.0.jar",
+    "org.eclipse.swt.cocoa.macosx.aarch64-3.135.0.jar",
   #elif defined(__x86_64__) || defined(_M_X64)
-    "org.eclipse.swt.cocoa.macosx.x86_64-3.134.0.jar",
+    "org.eclipse.swt.cocoa.macosx.x86_64-3.135.0.jar",
   #else
     #error "Unknown architecture"
   #endif
 #else
   #if defined(__aarch64__) || defined(_M_ARM64)
-    "org.eclipse.swt.gtk.linux.aarch64-3.134.0.jar",
+    "org.eclipse.swt.gtk.linux.aarch64-3.135.0.jar",
   #elif defined(__x86_64__) || defined(_M_X64)
-    "org.eclipse.swt.gtk.linux.x86_64-3.134.0.jar",
+    "org.eclipse.swt.gtk.linux.x86_64-3.135.0.jar",
   #else
     #error "Unknown architecture"
   #endif
