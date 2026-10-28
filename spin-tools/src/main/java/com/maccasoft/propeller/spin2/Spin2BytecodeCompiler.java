@@ -947,7 +947,7 @@ public abstract class Spin2BytecodeCompiler extends Spin2PasmCompiler {
                         source.addAll(compileBytecodeExpression(context, method, node.getChild(0), true));
 
                         if (indexNode != null) {
-                            source.addAll(compileBytecodeExpression(context, method, indexNode, true));
+                            source.addAll(compileConstantExpression(context, method, indexNode));
                         }
 
                         source.add(new MemoryOp(context, Bytecode.Size.Long, Bytecode.Base.Pop, Bytecode.Op.Read, indexNode != null));
@@ -1752,7 +1752,7 @@ public abstract class Spin2BytecodeCompiler extends Spin2PasmCompiler {
                     source.addAll(compileBytecodeExpression(context, method, childNode.getChild(0), true));
 
                     if (indexNode != null) {
-                        source.addAll(compileBytecodeExpression(context, method, indexNode, true));
+                        source.addAll(compileConstantExpression(context, method, indexNode));
                     }
 
                     int bitfield = -1;
@@ -1912,7 +1912,7 @@ public abstract class Spin2BytecodeCompiler extends Spin2PasmCompiler {
                 source.addAll(compileBytecodeExpression(context, method, node.getChild(0), true));
 
                 if (indexNode != null) {
-                    source.addAll(compileBytecodeExpression(context, method, indexNode, true));
+                    source.addAll(compileConstantExpression(context, method, indexNode));
                 }
 
                 Size ss = Bytecode.Size.Long;
@@ -3090,7 +3090,7 @@ public abstract class Spin2BytecodeCompiler extends Spin2PasmCompiler {
 
             source.addAll(compileBytecodeExpression(context, method, node.getChild(0), true));
             if (indexNode != null) {
-                source.addAll(compileBytecodeExpression(context, method, indexNode, true));
+                source.addAll(compileConstantExpression(context, method, indexNode));
             }
 
             Size ss = Bytecode.Size.Long;
