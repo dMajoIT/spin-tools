@@ -139,14 +139,12 @@ public class Spin2TreeBuilder {
         assignements.add("ADDBITS=");
         assignements.add("ADDPINS=");
 
-        assignements.add("+<=");
         assignements.add("<==");
         assignements.add("+<==");
         assignements.add("===");
         assignements.add("<>=");
-        assignements.add("+>==");
         assignements.add(">==");
-        assignements.add("+>=");
+        assignements.add("+>==");
         assignements.add("<=>=");
 
         assignements.add("&&=");
