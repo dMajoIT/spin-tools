@@ -204,7 +204,9 @@ public class Spin1TokenMarker extends SourceTokenMarker {
 
     private static final Set<String> preprocessor = new HashSet<>(Arrays.asList(new String[] {
         "define", "ifdef", "elifdef", "elseifdef", "ifndef", "elifndef", "elseifndef", "else", "if", "elif", "elseif", "endif",
-        "error", "warning", "pragma", "undef"
+        "error", "warning", "pragma", "undef",
+        "DEFINE", "IFDEF", "ELIFDEF", "ELSEIFDEF", "IFNDEF", "ELIFNDEF", "ELSEIFNDEF", "ELSE", "IF", "ELIF", "ELSEIF", "ENDIF",
+        "ERROR", "WARNING", "PRAGMA", "UNDEF"
     }));
 
     public Spin1TokenMarker(SourceProvider sourceProvider) {

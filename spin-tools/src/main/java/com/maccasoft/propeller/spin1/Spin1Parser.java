@@ -203,8 +203,8 @@ public class Spin1Parser extends Parser {
             return false;
         }
 
-        switch (keywordToken.getText().toLowerCase()) {
-            case "define": {
+        switch (keywordToken.getText()) {
+            case "define", "DEFINE": {
                 DirectiveNode.DefineNode node = new DirectiveNode.DefineNode(parent);
                 node.addToken(firstToken);
                 node.addToken(keywordToken);
@@ -232,8 +232,8 @@ public class Spin1Parser extends Parser {
                 return true;
             }
 
-            case "error":
-            case "warning": {
+            case "error", "ERROR":
+            case "warning", "WARNING": {
                 DirectiveNode node = new DirectiveNode(parent);
                 node.addToken(firstToken);
                 node.addToken(keywordToken);
@@ -258,19 +258,19 @@ public class Spin1Parser extends Parser {
                 return true;
             }
 
-            case "ifdef":
-            case "elifdef":
-            case "elseifdef":
-            case "ifndef":
-            case "elifndef":
-            case "elseifndef":
-            case "else":
-            case "if":
-            case "elif":
-            case "elseif":
-            case "endif":
-            case "pragma":
-            case "undef": {
+            case "ifdef", "IFDEF":
+            case "elifdef", "ELIFDEF":
+            case "elseifdef", "ELSEIFDEF":
+            case "ifndef", "IFNDEF":
+            case "elifndef", "ELIFNDEF":
+            case "elseifndef", "ELSEIFNDEF":
+            case "else", "ELSE":
+            case "if", "IF":
+            case "elif", "ELIF":
+            case "elseif", "ELSEIF":
+            case "endif", "ENDIF":
+            case "pragma", "PRAGMA":
+            case "undef", "UNDEF": {
                 DirectiveNode node = new DirectiveNode(parent);
                 node.addToken(firstToken);
                 node.addToken(keywordToken);
