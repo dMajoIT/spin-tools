@@ -1561,6 +1561,9 @@ public class Spin2TokenMarker extends SourceTokenMarker {
                     if (modcX) {
                         id = modczOperands.get(token.getText());
                     }
+                    else if ("FVAR".equalsIgnoreCase(token.getText()) || "FVARS".equalsIgnoreCase(token.getText())) {
+                        id = TokenId.PASM_MODIFIER;
+                    }
                     break;
                 case 5:
                     id = debugKeywords.get(token.getText());
