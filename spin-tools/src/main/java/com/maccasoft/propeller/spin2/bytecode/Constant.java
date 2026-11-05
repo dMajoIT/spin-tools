@@ -53,12 +53,15 @@ public class Constant extends Spin2Bytecode {
                 (byte) ((value >> 14) & 0x7F)
             };
         }
-        return new byte[] {
-            (byte) ((value & 0x7F) | 0x80),
-            (byte) (((value >> 7) & 0x7F) | 0x80),
-            (byte) (((value >> 14) & 0x7F) | 0x80),
-            (byte) (value >> 21)
-        };
+        if (value < 0x20000000) {
+            return new byte[] {
+                (byte) ((value & 0x7F) | 0x80),
+                (byte) (((value >> 7) & 0x7F) | 0x80),
+                (byte) (((value >> 14) & 0x7F) | 0x80),
+                (byte) (value >> 21)
+            };
+        }
+        throw new IllegalArgumentException("value out of range");
     }
 
     public static int wrVarSize(long value) {
@@ -81,7 +84,7 @@ public class Constant extends Spin2Bytecode {
                 (byte) (value & 0x7F)
             };
         }
-        if (value >= -8291 && value < 8291) {
+        if (value >= -8192 && value < 8192) {
             return new byte[] {
                 (byte) ((value & 0x7F) | 0x80),
                 (byte) ((value >> 7) & 0x7F)
@@ -94,12 +97,15 @@ public class Constant extends Spin2Bytecode {
                 (byte) ((value >> 14) & 0x7F)
             };
         }
-        return new byte[] {
-            (byte) ((value & 0x7F) | 0x80),
-            (byte) (((value >> 7) & 0x7F) | 0x80),
-            (byte) (((value >> 14) & 0x7F) | 0x80),
-            (byte) (value >> 21)
-        };
+        if (value >= -268_435_456 && value < 268_435_456) {
+            return new byte[] {
+                (byte) ((value & 0x7F) | 0x80),
+                (byte) (((value >> 7) & 0x7F) | 0x80),
+                (byte) (((value >> 14) & 0x7F) | 0x80),
+                (byte) (value >> 21)
+            };
+        }
+        throw new IllegalArgumentException("value out of range");
     }
 
     public static int wrVarsSize(long value) {

@@ -235,6 +235,10 @@ public class Spin2PAsmExpression {
                         }
                     } catch (IOException e) {
                         // Do nothing
+                    } catch (IllegalArgumentException e) {
+                        throw new CompilerException("FVAR value out of range", expression.getData());
+                    } catch (Exception e) {
+                        throw new CompilerException(e.getMessage(), expression.getData());
                     }
                     return os.toByteArray();
                 }
@@ -246,6 +250,10 @@ public class Spin2PAsmExpression {
                         }
                     } catch (IOException e) {
                         // Do nothing
+                    } catch (IllegalArgumentException e) {
+                        throw new CompilerException("FVARS value out of range", expression.getData());
+                    } catch (Exception e) {
+                        throw new CompilerException(e.getMessage(), expression.getData());
                     }
                     return os.toByteArray();
             }
@@ -285,6 +293,10 @@ public class Spin2PAsmExpression {
                         size = os.size();
                     } catch (IOException e) {
                         // Do nothing
+                    } catch (IllegalArgumentException e) {
+                        throw new CompilerException("FVAR value out of range", expression.getData());
+                    } catch (Exception e) {
+                        throw new CompilerException(e.getMessage(), expression.getData());
                     }
                     break;
                 }
@@ -297,6 +309,10 @@ public class Spin2PAsmExpression {
                         size = os.size();
                     } catch (IOException e) {
                         // Do nothing
+                    } catch (IllegalArgumentException e) {
+                        throw new CompilerException("FVARS value out of range", expression.getData());
+                    } catch (Exception e) {
+                        throw new CompilerException(e.getMessage(), expression.getData());
                     }
                     break;
             }
@@ -335,6 +351,10 @@ public class Spin2PAsmExpression {
                         }
                     } catch (IOException e) {
                         // Do nothing
+                    } catch (IllegalArgumentException e) {
+                        throw new CompilerException("FVAR value out of range", expression.getData());
+                    } catch (Exception e) {
+                        throw new CompilerException(e.getMessage(), expression.getData());
                     }
                     return os.toByteArray();
                 }
@@ -346,6 +366,10 @@ public class Spin2PAsmExpression {
                         }
                     } catch (IOException e) {
                         // Do nothing
+                    } catch (IllegalArgumentException e) {
+                        throw new CompilerException("FVARS value out of range", expression.getData());
+                    } catch (Exception e) {
+                        throw new CompilerException(e.getMessage(), expression.getData());
                     }
                     return os.toByteArray();
             }
@@ -386,6 +410,10 @@ public class Spin2PAsmExpression {
                         size = os.size();
                     } catch (IOException e) {
                         // Do nothing
+                    } catch (IllegalArgumentException e) {
+                        throw new CompilerException("FVAR value out of range", expression.getData());
+                    } catch (Exception e) {
+                        throw new CompilerException(e.getMessage(), expression.getData());
                     }
                     break;
                 }
@@ -398,6 +426,10 @@ public class Spin2PAsmExpression {
                         size = os.size();
                     } catch (IOException e) {
                         // Do nothing
+                    } catch (IllegalArgumentException e) {
+                        throw new CompilerException("FVARS value out of range", expression.getData());
+                    } catch (Exception e) {
+                        throw new CompilerException(e.getMessage(), expression.getData());
                     }
                     break;
             }
@@ -434,6 +466,10 @@ public class Spin2PAsmExpression {
                         }
                     } catch (IOException e) {
                         // Do nothing
+                    } catch (IllegalArgumentException e) {
+                        throw new CompilerException("FVAR value out of range", expression.getData());
+                    } catch (Exception e) {
+                        throw new CompilerException(e.getMessage(), expression.getData());
                     }
                     return os.toByteArray();
                 }
@@ -445,6 +481,10 @@ public class Spin2PAsmExpression {
                         }
                     } catch (IOException e) {
                         // Do nothing
+                    } catch (IllegalArgumentException e) {
+                        throw new CompilerException("FVARS value out of range", expression.getData());
+                    } catch (Exception e) {
+                        throw new CompilerException(e.getMessage(), expression.getData());
                     }
                     return os.toByteArray();
             }
@@ -487,6 +527,10 @@ public class Spin2PAsmExpression {
                         size = os.size();
                     } catch (IOException e) {
                         // Do nothing
+                    } catch (IllegalArgumentException e) {
+                        throw new CompilerException("FVAR value out of range", expression.getData());
+                    } catch (Exception e) {
+                        throw new CompilerException(e.getMessage(), expression.getData());
                     }
                     break;
                 }
@@ -499,6 +543,10 @@ public class Spin2PAsmExpression {
                         size = os.size();
                     } catch (IOException e) {
                         // Do nothing
+                    } catch (IllegalArgumentException e) {
+                        throw new CompilerException("FVARS value out of range", expression.getData());
+                    } catch (Exception e) {
+                        throw new CompilerException(e.getMessage(), expression.getData());
                     }
                     break;
             }
