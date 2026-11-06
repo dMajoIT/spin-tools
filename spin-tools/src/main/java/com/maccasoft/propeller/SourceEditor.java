@@ -345,7 +345,7 @@ public class SourceEditor {
         overwriteCaret = new Caret(styledText, SWT.NULL);
         alignCaret = new Caret(styledText, SWT.NULL);
 
-        overview = new OverviewRuler(container) {
+        overview = new OverviewRuler(container, styledText) {
 
             @Override
             protected void goToLine(int line) {
@@ -353,7 +353,6 @@ public class SourceEditor {
             }
 
         };
-        overview.setStyledText(styledText);
 
         Font textFont = JFaceResources.getTextFont();
         FontData fontData = textFont.getFontData()[0];
@@ -796,11 +795,7 @@ public class SourceEditor {
                 if (message != null) {
                     Rectangle textBounds = styledText.getTextBounds(message.start, message.stop);
 
-                    popupMouseBounds = textBounds;
-                    popupMouseBounds.x -= 5;
-                    popupMouseBounds.y -= 5;
-                    popupMouseBounds.width += 10;
-                    popupMouseBounds.height += 10;
+                    popupMouseBounds = new Rectangle(textBounds.x - 5, textBounds.y - 5, textBounds.width + 10, textBounds.height + 10);
 
                     popupWindow = new Shell(styledText.getShell(), SWT.ON_TOP);
                     FillLayout layout = new FillLayout();
@@ -813,11 +808,18 @@ public class SourceEditor {
                     Label content = new Label(popupWindow, SWT.NONE);
                     content.setForeground(textForeground);
                     content.setText(message.getMessage());
+
                     popupWindow.pack();
 
-                    Point size = popupWindow.getSize();
-                    Rectangle bounds = display.map(styledText, null, textBounds);
-                    popupWindow.setLocation(bounds.x, bounds.y - size.y - 3);
+                    Rectangle displayBounds = display.getBounds();
+                    Point popupWindowSize = popupWindow.getSize();
+                    Rectangle displayTextBounds = display.map(styledText, null, textBounds);
+
+                    Rectangle bounds = new Rectangle(displayTextBounds.x, displayTextBounds.y - popupWindowSize.y - 3, popupWindowSize.x, popupWindowSize.y);
+                    if (bounds.x + bounds.width > displayBounds.x + displayBounds.width) {
+                        bounds.x = displayBounds.x + displayBounds.width - bounds.width;
+                    }
+                    popupWindow.setBounds(bounds);
 
                     popupWindow.setVisible(true);
                     return;
@@ -891,11 +893,9 @@ public class SourceEditor {
                     }
                 }
                 if (text != null && !text.isEmpty()) {
-                    popupMouseBounds = styledText.getTextBounds(token.start, token.stop);
-                    popupMouseBounds.x -= 5;
-                    popupMouseBounds.y -= 5;
-                    popupMouseBounds.width += 10;
-                    popupMouseBounds.height += 10;
+                    Rectangle textBounds = styledText.getTextBounds(token.start, token.stop);
+
+                    popupMouseBounds = new Rectangle(textBounds.x - 5, textBounds.y - 5, textBounds.width + 10, textBounds.height + 10);
 
                     popupWindow = new Shell(styledText.getShell(), SWT.RESIZE | SWT.ON_TOP);
                     FillLayout layout = new FillLayout();
@@ -915,24 +915,17 @@ public class SourceEditor {
 
                     popupWindow.pack();
 
-                    Rectangle textBounds = display.map(styledText, null, styledText.getTextBounds(token.start, token.stop));
-                    Point popupWindowSize = popupWindow.computeSize(640, -1, true);
-                    if (popupWindowSize.y < 200) {
-                        popupWindowSize.y = 200;
-                    }
+                    Point popupWindowSize = popupWindow.computeSize(640, 240, true);
 
-                    Rectangle bounds = new Rectangle(textBounds.x, textBounds.y + textBounds.height + 3, 640, popupWindowSize.y);
-                    if (bounds.x + bounds.width > display.getClientArea().width) {
-                        bounds.width = display.getClientArea().width - bounds.x;
-                        bounds.height = popupWindow.computeSize(bounds.width, -1, true).y;
+                    Rectangle displayBounds = display.getBounds();
+                    Rectangle displayTextBounds = display.map(styledText, null, textBounds);
+
+                    Rectangle bounds = new Rectangle(displayTextBounds.x, displayTextBounds.y + displayTextBounds.height + 3, popupWindowSize.x, popupWindowSize.y);
+                    if (bounds.x + bounds.width > displayBounds.x + displayBounds.width) {
+                        bounds.x = displayBounds.x + displayBounds.width - bounds.width;
                     }
-                    if (bounds.y + bounds.height > display.getClientArea().height) {
-                        if (bounds.y + 480 < display.getClientArea().height) {
-                            bounds.height = 480;
-                        }
-                        else {
-                            bounds.y = textBounds.y - 3 - bounds.height;
-                        }
+                    if (bounds.y + bounds.height > displayBounds.y + displayBounds.height) {
+                        bounds.y = displayTextBounds.y - bounds.height - 3;
                     }
                     popupWindow.setBounds(bounds);
 

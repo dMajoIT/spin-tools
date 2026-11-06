@@ -22,6 +22,7 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Cursor;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
@@ -40,7 +41,6 @@ public class OverviewRuler {
     Display display;
     Canvas canvas;
 
-    StyledText styledText;
     Cursor handCursor;
 
     Color errorColor;
@@ -50,7 +50,7 @@ public class OverviewRuler {
 
     Shell popupWindow;
 
-    public OverviewRuler(Composite parent) {
+    public OverviewRuler(Composite parent, StyledText styledText) {
         display = parent.getDisplay();
 
         handCursor = display.getSystemCursor(SWT.CURSOR_HAND);
@@ -123,7 +123,7 @@ public class OverviewRuler {
                     popupWindow = null;
                     styledText.setFocus();
                 }
-                canvas.setCursor(isOnAnnotation(e.y) ? handCursor : null);
+                canvas.setCursor(isOnAnnotation(styledText, e.y) ? handCursor : null);
             }
         });
         canvas.addMouseTrackListener(new MouseTrackAdapter() {
@@ -178,13 +178,22 @@ public class OverviewRuler {
                     content.setText(message);
                     popupWindow.pack();
 
-                    Rectangle popupRect = popupWindow.getBounds();
-                    popupRect.x = rect.x - popupRect.width;
-                    popupRect.y = e.y - popupRect.height / 2;
-                    popupWindow.setBounds(display.map(canvas, null, popupRect));
+                    Point popupWindowSize = popupWindow.getSize();
+                    Rectangle canvasBounds = canvas.getBounds();
+
+                    Rectangle popupRect = new Rectangle(canvasBounds.x - popupWindowSize.x - 3, e.y - popupWindowSize.y / 2, popupWindowSize.x, popupWindowSize.y);
+                    popupWindow.setBounds(display.map(canvas.getParent(), null, popupRect));
 
                     popupWindow.setVisible(true);
                 }
+            }
+        });
+
+        styledText.addListener(SWT.Deactivate, event -> {
+
+            if (popupWindow != null) {
+                popupWindow.dispose();
+                popupWindow = null;
             }
         });
 
@@ -194,10 +203,6 @@ public class OverviewRuler {
 
         errorColor = ColorRegistry.getColor(0xFE, 0x2D, 0x98);
         warningColor = ColorRegistry.getColor(0xF2, 0xBF, 0x57);
-    }
-
-    public void setStyledText(StyledText styledText) {
-        this.styledText = styledText;
     }
 
     public void setErrorHighlight(int line, String message) {
@@ -235,7 +240,7 @@ public class OverviewRuler {
 
     }
 
-    boolean isOnAnnotation(int ey) {
+    boolean isOnAnnotation(StyledText styledText, int ey) {
         Rectangle rect = canvas.getClientArea();
         int lineCount = styledText.getLineCount();
         float lineStep = Math.min((float) (rect.height - HEIGHT) / lineCount, styledText.getLineHeight());
