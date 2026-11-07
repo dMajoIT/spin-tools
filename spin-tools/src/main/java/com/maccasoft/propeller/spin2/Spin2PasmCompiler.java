@@ -169,7 +169,7 @@ public abstract class Spin2PasmCompiler extends ObjectCompiler {
         if (mnemonic != null) {
             instructionFactory = Spin2PAsmInstructionFactory.get(mnemonic);
             if (instructionFactory == null) {
-                if (scope.getStructureDefinition(mnemonic) != null) {
+                if (datScope.getStructureDefinition(mnemonic) != null) {
                     instructionFactory = new DataType(mnemonic);
                     if (!node.parameters.isEmpty()) {
                         logMessage(new CompilerException("expecting end of line", node.parameters.getFirst()));
